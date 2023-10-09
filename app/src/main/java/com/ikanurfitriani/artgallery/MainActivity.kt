@@ -60,7 +60,9 @@ data class ArtPiece(
 @Composable
 // Blok fungsi ArtGalleryApp untuk menampilkan semua bagian halaman
 fun ArtGalleryApp() {
+    // Deklarasi variabel artPieces yang berisi daftar karya seni.
     val artPieces = listOf(
+        // Setiap karya seni memiliki berbagai properti seperti gambar, judul, deskripsi, dan tahun pembuatan
         ArtPiece(
             R.drawable.karya_seni_1,
             "Diponegoro Memimpin Pertempuran",
@@ -93,8 +95,10 @@ fun ArtGalleryApp() {
         )
     )
 
+    // Untuk melacak indeks karya seni yang sedang ditampilkan
     var currentArtPieceIndex by remember { mutableStateOf(0) }
 
+    // Untuk mengatur elemen-elemen anak secara vertikal
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,6 +109,7 @@ fun ArtGalleryApp() {
         // Menyusun konten secara horizontal di tengah
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        // Bagian atas artgallery menggunakan Box
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -113,6 +118,7 @@ fun ArtGalleryApp() {
                 .clip(RoundedCornerShape(12.dp)),
             contentAlignment = Alignment.Center
         ) {
+            // Untuk mengatur dan menampilkan text
             Text(
                 text = "ART GALLERY",
                 style = MaterialTheme.typography.headlineLarge,
@@ -123,8 +129,10 @@ fun ArtGalleryApp() {
             )
         }
 
+        // Menambahkan ruang kosong sebesar 48 dp diantara elemen-elemen tata letak
         Spacer(modifier = Modifier.height(48.dp))
 
+        //untuk menampilkan gambar karya seni
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
@@ -137,6 +145,7 @@ fun ArtGalleryApp() {
                 )
                 .padding(8.dp)
         ) {
+            // Untuk menampilkan gambar/foto
             Image(
                 painter = painterResource(id = artPieces[currentArtPieceIndex].resourceId),
                 contentDescription = artPieces[currentArtPieceIndex].name,
@@ -145,8 +154,10 @@ fun ArtGalleryApp() {
             )
         }
 
+        // Menambahkan ruang kosong sebesar 8 dp diantara elemen-elemen tata letak
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Teks untuk menampilkan judul karya seni
         Text(
             text = artPieces[currentArtPieceIndex].name,
             style = MaterialTheme.typography.headlineMedium,
@@ -154,24 +165,30 @@ fun ArtGalleryApp() {
             fontSize = 28.sp,
         )
 
+        // Menambahkan ruang kosong sebesar 8 dp diantara elemen-elemen tata letak
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Teks untuk menampilkan deskripsi karya seni
         Text(
             text = artPieces[currentArtPieceIndex].description,
             style = MaterialTheme.typography.bodyMedium,
             fontSize = 18.sp
         )
 
+        // Menambahkan ruang kosong sebesar 8 dp diantara elemen-elemen tata letak
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Teks untuk menampilkan tahun karya seni
         Text(
             text = "Tahun: ${artPieces[currentArtPieceIndex].year}",
             style = MaterialTheme.typography.bodyMedium,
             fontSize = 18.sp
         )
 
+        // Menambahkan ruang kosong sebesar 16 dp diantara elemen-elemen tata letak
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Pembuatan baris yang berisi dua tombol navigasi, yaitu "Sebelumnya" dan "Selanjutnya"
         Row(
             modifier = Modifier
                 .fillMaxWidth()
