@@ -17,9 +17,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -98,122 +96,181 @@ fun ArtGalleryApp() {
     // Untuk melacak indeks karya seni yang sedang ditampilkan
     var currentArtPieceIndex by remember { mutableStateOf(0) }
 
-    // Untuk mengatur elemen-elemen anak secara vertikal
+    // Untuk mengatur elemen dalam column
     Column(
         modifier = Modifier
+            // Untuk mengisi seluruh ruang yang tersedia dalam komposisi
             .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
-        // Menyusun konten secara vertikal di tengah
+            // Menambahkan jarak sebesar 16 density-independent pixel dari semua sisi column
+            .padding(16.dp),
+        // Membuat elemen-elemen berada di tengah secara vertikal
         verticalArrangement = Arrangement.Center,
-        // Menyusun konten secara horizontal di tengah
+        // Membuat elemen-elemen berada di tengah secara horizontal
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // Bagian atas artgallery menggunakan Box
+        // Untuk mengelompokkan elemen-elemen UI ke dalam sebuah kotak
         Box(
             modifier = Modifier
+                // Untuk mengisi maksimum lebar yang tersedia
                 .fillMaxWidth()
-                .background(Color.Gray)
+                // Mengatur latar belakang kotak dengan warna hitam
+                .background(Color.Black)
+                // Menambahkan jarak sebesar 5 density-independent pixels di sekeliling kotak
                 .padding(5.dp)
+                // Membuat kotak dengan sudut yang dibulatkan, sehingga tepinya tidak tajam
                 .clip(RoundedCornerShape(12.dp)),
+            // Untuk mengatur konten di dalam Box agar berada di tengah
             contentAlignment = Alignment.Center
         ) {
             // Untuk mengatur dan menampilkan text
             Text(
+                // Menampilkan judul aplikasi yaitu ART GALLERY
                 text = "ART GALLERY",
+                // Untuk menampilkan teks besar sebagai judul
                 style = MaterialTheme.typography.headlineLarge,
+                // Ukuran teks sebesar 24 scalable pixels
                 fontSize = 24.sp,
+                // Membuat teks menjadi tebal
                 fontWeight = FontWeight.Bold,
+                // Warna teks diatur menjadi putih
                 color = Color.White,
+                // Menambahkan jarak sebesar 16 density-independent pixels di dalam teks
                 modifier = Modifier.padding(16.dp)
             )
         }
 
-        // Menambahkan ruang kosong sebesar 48 dp diantara elemen-elemen tata letak
-        Spacer(modifier = Modifier.height(48.dp))
+        // Menambahkan ruang kosong sebesar 32 dp diantara elemen-elemen tata letak
+        Spacer(modifier = Modifier.height(32.dp))
 
-        //untuk menampilkan gambar karya seni
-        Surface(
+        // Untuk menampilkan gambar/foto
+        Image(
+            // Untuk mengambil gambar dari resource drawable
+            painter = painterResource(id = artPieces[currentArtPieceIndex].resourceId),
+            // Untuk menampilkan deskripsi gambar
+            contentDescription = artPieces[currentArtPieceIndex].name,
+            // Mengatur skala konten gambaar dengan mengisi gambar ke dalam batas yang tersedia
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
+                // Menentukan lebar gambar sebesar 300 density-independent pixels
+                .width(300.dp)
+                // Menentukan tinggi gambar sebesar 400 density-independent pixels
+                .height(400.dp)
+                // Untuk memotong sudut gambar menjadi bentuk sudut yang dibulatkan dengan jari sebesar 12 dp
+                .clip(RoundedCornerShape(12.dp))
+                // Memberikan latar belakang gambar dengan warna yang sesuai dengan tema utama aplikasi
                 .background(MaterialTheme.colorScheme.primary)
+                // Mengatur garis tepi untuk gambar
                 .border(
+                    // Menentukan lebar border sebesar 2 dp
                     width = 2.dp,
+                    // Warna border diatur menjadi abu-abu
                     color = Color.Gray,
+                    // Bentuk border mengikuti bentuk yang telah ditentukan dalam tema Material Design
                     shape = MaterialTheme.shapes.medium
                 )
-                .padding(8.dp)
+        )
+
+        // Menambahkan ruang kosong sebesar 24 dp diantara elemen-elemen tata letak
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Frame untuk nama, deskripsi dan tahun karya seni
+        Box(
+            modifier = Modifier
+                // Untuk mengisi maksimum lebar yang tersedia
+                .fillMaxWidth()
+                // Memberikan latar belakang warna hitam dengan tingkat kejernihan sebesar 50% transparan
+                .background(Color.Black.copy(alpha = 0.5f))
+                // Menambahkan jarak sebesar 16 density-independent pixels di sekeliling box
+                .padding(16.dp),
+            // Untuk mengatur konten di dalam Box agar berada di tengah
+            contentAlignment = Alignment.Center
         ) {
-            // Untuk menampilkan gambar/foto
-            Image(
-                painter = painterResource(id = artPieces[currentArtPieceIndex].resourceId),
-                contentDescription = artPieces[currentArtPieceIndex].name,
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.fillMaxSize()
-            )
+            // Untuk mengatur elemen dalam column
+            Column(
+                // Membuat elemen-elemen berada di tengah secara horizontal
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Untuk mengatur dan menampilkan text
+                Text(
+                    // Untuk menampilkan nama karya seni
+                    text = artPieces[currentArtPieceIndex].name,
+                    // Untuk menampilkan teks medium sebagai nama karya seni
+                    style = MaterialTheme.typography.headlineMedium,
+                    // Membuat teks menjadi tebal
+                    fontWeight = FontWeight.Bold,
+                    // Ukuran teks sebesar 24 scalable pixels
+                    fontSize = 24.sp,
+                    // Warna teks diatur menjadi putih
+                    color = Color.White
+                )
+
+                // Menambahkan ruang kosong sebesar 8 dp diantara elemen-elemen tata letak
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Untuk mengatur dan menampilkan text
+                Text(
+                    // Untuk menampilkan deskripsi karya seni
+                    text = artPieces[currentArtPieceIndex].description,
+                    // Untuk menampilkan teks medium sebagai deskripsi karya seni
+                    style = MaterialTheme.typography.bodyMedium,
+                    // Ukuran teks sebesar 18 scalable pixels
+                    fontSize = 18.sp,
+                    // Warna teks diatur menjadi putih
+                    color = Color.White
+                )
+
+                // Menambahkan ruang kosong sebesar 8 dp diantara elemen-elemen tata letak
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Untuk mengatur dan menampilkan text
+                Text(
+                    // Untuk menampilkan tahun karya seni
+                    text = "Tahun : ${artPieces[currentArtPieceIndex].year}",
+                    // Untuk menampilkan teks medium sebagai tahun karya seni
+                    style = MaterialTheme.typography.bodyMedium,
+                    // Ukuran teks sebesar 18 scalable pixels
+                    fontSize = 18.sp,
+                    // Warna teks diatur menjadi putih
+                    color = Color.White
+                )
+            }
         }
-
-        // Menambahkan ruang kosong sebesar 8 dp diantara elemen-elemen tata letak
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Teks untuk menampilkan judul karya seni
-        Text(
-            text = artPieces[currentArtPieceIndex].name,
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            fontSize = 28.sp,
-        )
-
-        // Menambahkan ruang kosong sebesar 8 dp diantara elemen-elemen tata letak
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Teks untuk menampilkan deskripsi karya seni
-        Text(
-            text = artPieces[currentArtPieceIndex].description,
-            style = MaterialTheme.typography.bodyMedium,
-            fontSize = 18.sp
-        )
-
-        // Menambahkan ruang kosong sebesar 8 dp diantara elemen-elemen tata letak
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Teks untuk menampilkan tahun karya seni
-        Text(
-            text = "Tahun: ${artPieces[currentArtPieceIndex].year}",
-            style = MaterialTheme.typography.bodyMedium,
-            fontSize = 18.sp
-        )
 
         // Menambahkan ruang kosong sebesar 16 dp diantara elemen-elemen tata letak
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Pembuatan baris yang berisi dua tombol navigasi, yaitu "Sebelumnya" dan "Selanjutnya"
+        // Untuk mengatur elemen dalam row
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            // Untuk mengisi maksimum lebar yang tersedia
+            modifier = Modifier.fillMaxWidth(),
+            // Mengatur jarak antara dua elemen anak dalam Row sehingga terdapat ruang di antara keduanya
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            // Untuk membuat tombol interaktif
             Button(
+                // Menentukan tindakan yang akan diambil saat tombol diklik
                 onClick = {
-                    if (currentArtPieceIndex > 0) {
-                        currentArtPieceIndex--
+                    // Untuk melingkari kembali ke halaman terakhir saat di klik di halaman pertama
+                    currentArtPieceIndex = if (currentArtPieceIndex > 0) {
+                        currentArtPieceIndex - 1
+                    } else {
+                        artPieces.size - 1
                     }
-                },
-                enabled = currentArtPieceIndex > 0
+                }
             ) {
+                // Menampilkan teks Sebelumnya di dalam button
                 Text(text = "Sebelumnya")
             }
 
+            // Untuk membuat tombol interaktif
             Button(
+                // Menentukan tindakan yang akan diambil saat tombol diklik
                 onClick = {
-                    if (currentArtPieceIndex < artPieces.size - 1) {
-                        currentArtPieceIndex++
-                    }
-                },
-                enabled = currentArtPieceIndex < artPieces.size - 1
+                    // Untuk melingkari kembali ke halaman pertama saat di klik di halaman terakhir
+                    currentArtPieceIndex = (currentArtPieceIndex + 1) % artPieces.size
+                }
             ) {
+                // Menampilkan teks Selanjutnya di dalam button
                 Text(text = "Selanjutnya")
             }
         }
