@@ -287,7 +287,7 @@ fun ArtGalleryApp() {
 )
 // Fungsi composable untuk menampilkan pratinjau halaman fungsi ArtGalleryApp
 @Composable
-fun BusinessCardPreview() {
+fun ArtGalleryPreview() {
     ArtGalleryTheme {
         ArtGalleryApp()
     }
